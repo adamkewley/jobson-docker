@@ -53,6 +53,8 @@ run: compile
 package: clean compile  # for internal use: I keep source + images on-disk
 	docker save ${IMG_NAME} -o  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar
 	git archive -o target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}-src.tar.gz ${ARTIFACT_VERSION}
+	cp  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar ~/Dropbox/projects/${ARTIFACT_NAME}/releases
+	cp  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}-src.tar.gz ~/Dropbox/projects/${ARTIFACT_NAME}/releases
 
 deploy: clean compile
 	docker tag ${IMG_NAME} adamkewley/${IMG_NAME}:${ARTIFACT_VERSION}
