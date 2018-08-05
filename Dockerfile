@@ -2,7 +2,8 @@ FROM ubuntu:16.04
 
 RUN apt update && apt install -y \
     nginx \
-    openjdk-8-jre 
+    openjdk-8-jre \
+    supervisor
 
 # Install UI assets + reverse proxy
 COPY target/jobson-ui /usr/share/nginx/html
@@ -20,10 +21,5 @@ USER root
 
 EXPOSE 80
 
-# HACK: this docker container runs *both* nginx AND jobson - despite
-# docker being designed for a single master process. This is because
-# it's a PITA for standard end-users to have to configure
-# inter-container networks etc.
-COPY run.bash /usr/local/bin
-WORKDIR /home/jobson
-CMD ["bash", "/usr/local/bin/run.bash"]
+COPY supervisord.conf /etc/supervisord.conf
+CMD ["supervisord", "--configuration", "/etc/supervisord.conf", "--nodaemon"]

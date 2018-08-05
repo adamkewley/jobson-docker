@@ -48,7 +48,7 @@ compile: validate target/jobson-server target/jobson-ui
 	docker build -t ${IMG_NAME} .
 
 run: compile
-	docker run --name tmp-${IMG_NAME} -p 8080:80 -d ${IMG_NAME}
+	docker run --name tmp-${IMG_NAME} -p 8086:80 -d ${IMG_NAME}
 
 package: clean compile  # for internal use: I keep source + images on-disk
 	docker save ${IMG_NAME} -o  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar
