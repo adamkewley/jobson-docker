@@ -2,7 +2,7 @@
 
 IMG_NAME := jobson
 ARTIFACT_NAME := ${IMG_NAME}-docker
-ARTIFACT_VERSION := 0.1.1
+ARTIFACT_VERSION := 0.1.2
 ARTIFACT_FILENAME := ${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar
 
 UI_ARTIFACT := jobson-ui
@@ -45,19 +45,19 @@ target/jobson-ui: target/${UI_FILENAME}
 validate: target/${SRV_FILENAME} target/${UI_FILENAME}
 
 compile: validate target/jobson-server target/jobson-ui
-	docker build -t ${IMG_NAME} .
+	docker build -t ${IMG_NAME}:${ARTIFACT_VERSION} .
 
 run: compile
-	docker run --name tmp-${IMG_NAME} -p 8086:80 -d ${IMG_NAME}
+	docker run --name tmp-${IMG_NAME} -p 8086:80 -d ${IMG_NAME}:${ARTIFACT_VERSION}
 
 package: clean compile  # for internal use: I keep source + images on-disk
-	docker save ${IMG_NAME} -o  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar
+	docker save ${IMG_NAME}:${ARTIFACT_VERSION} -o  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar
 	git archive -o target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}-src.tar.gz ${ARTIFACT_VERSION}
 	cp  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar ~/Dropbox/projects/${ARTIFACT_NAME}/releases
 	cp  target/${ARTIFACT_NAME}-${ARTIFACT_VERSION}-src.tar.gz ~/Dropbox/projects/${ARTIFACT_NAME}/releases
 
 deploy: clean compile
-	docker tag ${IMG_NAME} adamkewley/${IMG_NAME}:${ARTIFACT_VERSION}
+	docker tag ${IMG_NAME}:${ARTIFACT_VERSION} adamkewley/${IMG_NAME}:${ARTIFACT_VERSION}
 	docker push adamkewley/${IMG_NAME}:${ARTIFACT_VERSION}
 
 clean:

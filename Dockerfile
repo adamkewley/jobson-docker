@@ -8,6 +8,7 @@ RUN apt update && apt install -y \
 # Install UI assets + reverse proxy
 COPY target/jobson-ui /usr/share/nginx/html
 COPY default.conf /etc/nginx/conf.d/default.conf
+RUN rm -rf /etc/nginx/sites-enabled/default
 
 # Install jobson binary onto PATH
 COPY target/jobson-server /usr/local/bin
