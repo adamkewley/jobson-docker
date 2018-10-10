@@ -6,12 +6,12 @@ ARTIFACT_VERSION := 0.1.2
 ARTIFACT_FILENAME := ${ARTIFACT_NAME}-${ARTIFACT_VERSION}.tar
 
 UI_ARTIFACT := jobson-ui
-UI_VERSION := 0.0.13
+UI_VERSION := 0.1.0-beta.3
 UI_FILENAME := ${UI_ARTIFACT}-${UI_VERSION}.tar.gz
 UI_URL := https://github.com/adamkewley/jobson-ui/releases/download/${UI_VERSION}/${UI_FILENAME}
 
 SRV_ARTIFACT := jobson-nix
-SRV_VERSION := 0.0.19
+SRV_VERSION := 0.1.0-beta.1
 SRV_FILENAME := ${SRV_ARTIFACT}-${SRV_VERSION}.tar.gz
 SRV_URL := https://github.com/adamkewley/jobson/releases/download/${SRV_VERSION}/${SRV_FILENAME}
 
